@@ -57,6 +57,7 @@ namespace RaffaLang.src
                                     Program.Bro_Internal.VariaveisInteirasBro.Add(format[1], int.Parse(format[5]));
                                     Program.Bro_Internal.VariaveisTipo.Add(format[1], "FERNVNDXCLOTHING");
                                     break;
+                                //string
                                 case "LEAN":
                                    string melhorqregex = Codes[i].Replace($"VARIAVEL {format[1]} = LEAN = ", String.Empty).Replace("\"", String.Empty);
                                     Program.Bro_Internal.VariaveisStringsBro.Add(format[1], melhorqregex);
@@ -75,8 +76,8 @@ namespace RaffaLang.src
                                 Program.Bro_Internal.VariaveisInteirasBro.Add(format[1], 0);
                                 Program.Bro_Internal.VariaveisTipo.Add(format[1], "FERNVNDXCLOTHING");
                                 break;
-                            case "LEAN":
-                            
+                            //string
+                            case "LEAN":                           
                                 Program.Bro_Internal.VariaveisStringsBro.Add(format[1], String.Empty);
                                 Program.Bro_Internal.VariaveisTipo.Add(format[1], "LEAN");
                                 break;
@@ -110,6 +111,13 @@ namespace RaffaLang.src
                             Program.Bro_Internal.VariaveisInteirasBro[memory] = a;
                             break;
                     }
+                }else if (Codes[i].StartsWith("MINHA CASA"))
+                {
+                    Program.Bro_Internal.MinhaCasaBroID = i;
+                }
+                else if(Codes[i].StartsWith("MEU MANO VOLTA PRA SUA CASA SE NAO VOU ATIRAR NA SUA CARA E VOU RIR"))
+                {
+                    i = Program.Bro_Internal.MinhaCasaBroID;
                 }
             }
 
