@@ -9,6 +9,8 @@ namespace RaffaLang.src
     {
         public string code_ = String.Empty;
         int ignore = 0x0;
+        int onfor = 0x0;
+        int savei = 0;
 
         public void Execute()
         {
@@ -287,7 +289,7 @@ namespace RaffaLang.src
                                             else { retorno = false; ignore = 0x1; }
                                             break;
                                         case "LEAN":
-                                            string a = valueStr.Replace("\"", String.Empty).Replace("\\", String.Empty).Replace(" ",String.Empty);
+                                            string a = valueStr.Replace("\"", String.Empty).Replace("\\", String.Empty).Replace(" ", String.Empty);
                                             if (Program.Bro_Internal.VariaveisStringsBro[memory].Replace(" ", String.Empty) == a)
                                             {
                                                 Console.WriteLine("oi");
@@ -397,7 +399,7 @@ namespace RaffaLang.src
                                     switch (Program.Bro_Internal.VariaveisTipo[memory])
                                     {
                                         case "FERNVNDXCLOTHING":
-                                            
+
                                             if (Program.Bro_Internal.VariaveisInteirasBro[memory] != int.Parse(format[3]))
                                             {
                                                 retorno = true;
@@ -416,19 +418,70 @@ namespace RaffaLang.src
                                     break;
                             }
                         }
+                    }
+                    else if (Codes[i].StartsWith("ENQUANTO EU TENHO MACONHA"))
+                    {
+                        string[] format = Codes[i].Split(' ');
+                        string memory = format[4].Replace("&", String.Empty);
+                        Program.Bro_Internal.forMemory = int.Parse(format[5]);
+                        Program.Bro_Internal.forTemp = memory;
+                        onfor = 0x1;
+                        switch (Program.Bro_Internal.VariaveisTipo[memory])
+                        {
+                            case "FERNVNDXCLOTHING":
+                                if (onfor == 0x1)
+                                {
+                                    savei = i;
+                                }
+
+                                if (Program.Bro_Internal.forMemory > 0)
+                                {
+                                    ignore = 0x0;
+                                }
+                                else
+                                {
+                                    onfor = 0x0;
+                                    ignore = 0x1;
+                                }
+
+
+                                break;
+
                         }
                     }
-                    else
+                    if (Codes[i].StartsWith("FIM"))
                     {
-                        if (Codes[i].StartsWith("FIM"))
+                        if (onfor == 0x1)
+                        {
+
+                            if (Program.Bro_Internal.forMemory > 0)
+                            {
+                                Program.Bro_Internal.forMemory -= 1;
+                                Program.Bro_Internal.VariaveisInteirasBro[Program.Bro_Internal.forTemp]++;
+                                i = savei;
+                            }
+                            else
+                            {
+                                onfor = 0x0;
+                            }
+                        }
+                        if (ignore == 0x1)
                         {
                             ignore = 0x0;
                         }
                     }
-
+                }
+                else
+                {
+                    if (Codes[i].StartsWith("FIM"))
+                    {
+                        ignore = 0x0;
+                    }
                 }
 
-                Console.ReadLine();
             }
+
+            Console.ReadLine();
         }
     }
+}
