@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace RaffaLang.src
 {
@@ -11,17 +12,104 @@ namespace RaffaLang.src
         public void Execute()
         {
             string[] Codes = code_.Split(new string[] { "BRO;" }, StringSplitOptions.None);
-            
-            for(int i=0; i < Codes.Length; i ++ )
+
+            for (int i = 0; i < Codes.Length; i++)
             {
-                if(Codes[i].StartsWith("\r") || Codes[i].StartsWith("\n"))
+                if (Codes[i].StartsWith("\r") || Codes[i].StartsWith("\n"))
                 {
                     Codes[i] = Codes[i].Replace("\n", String.Empty);
                     Codes[i] = Codes[i].Replace("\r", String.Empty);
                 }
-                if(Codes[i].StartsWith("TODO MUNDO FALA DE MIM"))
+                if (Codes[i].StartsWith("TODO MUNDO FALA DE MIM"))
                 {
-                    Program.Bro_Internal.print(Codes[i].Replace("TODO MUNDO FALA DE MIM ", String.Empty).Replace("\"",String.Empty));
+                    char[] listCharPrint = Codes[i].ToCharArray();
+                    if (listCharPrint[23] == '"')
+                    {
+                        Program.Bro_Internal.print(Codes[i].Replace("TODO MUNDO FALA DE MIM ", String.Empty).Replace("\"", String.Empty));
+                    }
+                    else
+                    {
+                        string[] varFind = Codes[i].Split(' ');
+                        string memory = Codes[i].Replace("TODO MUNDO FALA DE MIM ", String.Empty).Replace("&", String.Empty);
+                        memory = memory.Replace(" ", String.Empty);
+                        switch (Program.Bro_Internal.VariaveisTipo[memory])
+                        {
+                            case "FERNVNDXCLOTHING":
+                                Program.Bro_Internal.print(Program.Bro_Internal.VariaveisInteirasBro[memory].ToString());
+                                break;
+                            case "LEAN":
+                                Program.Bro_Internal.print(Program.Bro_Internal.VariaveisStringsBro[memory].ToString());
+                                break;
+                        }
+                    }
+                }
+                else if (Codes[i].StartsWith("VARIAVEL"))
+                {
+                    string[] format = Codes[i].Split(' ');
+                    if (format.Length >=7)
+                    {
+                        if (format[4] == "=")
+                        {
+                            switch (format[3])
+                            {
+                                //int
+                                case "FERNVNDXCLOTHING":
+                                    Program.Bro_Internal.VariaveisInteirasBro.Add(format[1], int.Parse(format[5]));
+                                    Program.Bro_Internal.VariaveisTipo.Add(format[1], "FERNVNDXCLOTHING");
+                                    break;
+                                case "LEAN":
+                                   string melhorqregex = Codes[i].Replace($"VARIAVEL {format[1]} = LEAN = ", String.Empty).Replace("\"", String.Empty);
+                                    Program.Bro_Internal.VariaveisStringsBro.Add(format[1], melhorqregex);
+                                    Program.Bro_Internal.VariaveisTipo.Add(format[1], "LEAN");
+                                    break;
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        switch (format[3])
+                        {
+                            //int
+                            case "FERNVNDXCLOTHING":
+                                Program.Bro_Internal.VariaveisInteirasBro.Add(format[1], 0);
+                                Program.Bro_Internal.VariaveisTipo.Add(format[1], "FERNVNDXCLOTHING");
+                                break;
+                            case "LEAN":
+                            
+                                Program.Bro_Internal.VariaveisStringsBro.Add(format[1], String.Empty);
+                                Program.Bro_Internal.VariaveisTipo.Add(format[1], "LEAN");
+                                break;
+                        }
+                    }
+                }
+                else if (Codes[i].StartsWith("MAIS CASH NA MINHA CONTA"))
+                {
+                    string[] format = Codes[i].Split(' ');
+                    string memory = Codes[i].Replace("MAIS CASH NA MINHA CONTA ", String.Empty).Replace("&", String.Empty);
+                    memory = memory.Replace(" ", String.Empty);
+                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                    {
+                        case "FERNVNDXCLOTHING":
+                            int a = Program.Bro_Internal.VariaveisInteirasBro[memory];
+                            a++;
+                            Program.Bro_Internal.VariaveisInteirasBro[memory] = a;
+                            break;
+                    }
+                }
+                else if (Codes[i].StartsWith("PAGA OQ SE ME DEVE"))
+                {
+                    string[] format = Codes[i].Split(' ');
+                    string memory = Codes[i].Replace("PAGA OQ SE ME DEVE ", String.Empty).Replace("&", String.Empty);
+                    memory = memory.Replace(" ", String.Empty);
+                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                    {
+                        case "FERNVNDXCLOTHING":
+                            int a = Program.Bro_Internal.VariaveisInteirasBro[memory];
+                            a--;
+                            Program.Bro_Internal.VariaveisInteirasBro[memory] = a;
+                            break;
+                    }
                 }
             }
 
