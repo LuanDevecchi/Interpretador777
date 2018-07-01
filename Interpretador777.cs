@@ -150,8 +150,7 @@ namespace RaffaLang.src
                                     case "FERNVNDXCLOTHING":
                                         Program.Bro_Internal.VariaveisInteirasBro[memory] += Program.Bro_Internal.VariaveisInteirasBro[memory_];
                                         break;
-                                }
-                                Console.Beep();
+                                }                         
                             }
                             else
                             {
