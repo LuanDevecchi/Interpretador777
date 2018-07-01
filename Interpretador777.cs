@@ -46,7 +46,7 @@ namespace RaffaLang.src
                 else if (Codes[i].StartsWith("VARIAVEL"))
                 {
                     string[] format = Codes[i].Split(' ');
-                    if (format.Length >=7)
+                    if (format.Length >= 7)
                     {
                         if (format[4] == "=")
                         {
@@ -59,7 +59,7 @@ namespace RaffaLang.src
                                     break;
                                 //string
                                 case "LEAN":
-                                   string melhorqregex = Codes[i].Replace($"VARIAVEL {format[1]} = LEAN = ", String.Empty).Replace("\"", String.Empty);
+                                    string melhorqregex = Codes[i].Replace($"VARIAVEL {format[1]} = LEAN = ", String.Empty).Replace("\"", String.Empty);
                                     Program.Bro_Internal.VariaveisStringsBro.Add(format[1], melhorqregex);
                                     Program.Bro_Internal.VariaveisTipo.Add(format[1], "LEAN");
                                     break;
@@ -77,7 +77,7 @@ namespace RaffaLang.src
                                 Program.Bro_Internal.VariaveisTipo.Add(format[1], "FERNVNDXCLOTHING");
                                 break;
                             //string
-                            case "LEAN":                           
+                            case "LEAN":
                                 Program.Bro_Internal.VariaveisStringsBro.Add(format[1], String.Empty);
                                 Program.Bro_Internal.VariaveisTipo.Add(format[1], "LEAN");
                                 break;
@@ -111,15 +111,16 @@ namespace RaffaLang.src
                             Program.Bro_Internal.VariaveisInteirasBro[memory] = a;
                             break;
                     }
-                }else if (Codes[i].StartsWith("MINHA CASA"))
+                }
+                else if (Codes[i].StartsWith("MINHA CASA"))
                 {
                     Program.Bro_Internal.MinhaCasaBroID = i;
                 }
-                else if(Codes[i].StartsWith("MEU MANO VOLTA PRA SUA CASA SE NAO VOU ATIRAR NA SUA CARA E VOU RIR"))
+                else if (Codes[i].StartsWith("MEU MANO VOLTA PRA SUA CASA SE NAO VOU ATIRAR NA SUA CARA E VOU RIR"))
                 {
                     i = Program.Bro_Internal.MinhaCasaBroID;
                 }
-                else if(Codes[i].StartsWith("SETA"))
+                else if (Codes[i].StartsWith("SETA"))
                 {
                     string[] format = Codes[i].Split(' ');
                     switch (Program.Bro_Internal.VariaveisTipo[format[1]])
@@ -131,8 +132,32 @@ namespace RaffaLang.src
                             Program.Bro_Internal.VariaveisStringsBro[format[1]] = format[3];
                             break;
                     }
+                }
+                else if (Codes[i].StartsWith("EU TENHO MACONHA AGR SOMA AE"))
+                {
+                    string[] format = Codes[i].Split(' ');
+                    string memory = format[6].Replace("&", String.Empty);
+                    memory = memory.Replace(" ", String.Empty);
+                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                    {
+                        case "FERNVNDXCLOTHING":
+                            Program.Bro_Internal.VariaveisInteirasBro[memory] += int.Parse(format[7]);
+                            break;
                     }
-               
+                }
+                else if (Codes[i].StartsWith("EU TENHO MACONHA AGR RETIRA AE"))
+                {
+                    string[] format = Codes[i].Split(' ');
+                    string memory = format[6].Replace("&", String.Empty);
+                    memory = memory.Replace(" ", String.Empty);
+                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                    {
+                        case "FERNVNDXCLOTHING":
+                            Program.Bro_Internal.VariaveisInteirasBro[memory] -= int.Parse(format[7]);
+                            break;
+                    }
+                }
+
             }
 
             Console.ReadLine();
