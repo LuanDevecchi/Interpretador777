@@ -158,7 +158,7 @@ namespace RaffaLang.src
                             }
                             break;
                     }
-                }   
+                }
                 else if (Codes[i].StartsWith("EU TENHO MACONHA AGR RETIRA AE"))
                 {
                     string[] format = Codes[i].Split(' ');
@@ -167,7 +167,20 @@ namespace RaffaLang.src
                     switch (Program.Bro_Internal.VariaveisTipo[memory])
                     {
                         case "FERNVNDXCLOTHING":
-                            Program.Bro_Internal.VariaveisInteirasBro[memory] -= int.Parse(format[7]);
+                            if (format[7].StartsWith("&"))
+                            {
+                                string memory_ = format[7].Replace("&", String.Empty);
+                                switch (Program.Bro_Internal.VariaveisTipo[memory_])
+                                {
+                                    case "FERNVNDXCLOTHING":
+                                        Program.Bro_Internal.VariaveisInteirasBro[memory] -= Program.Bro_Internal.VariaveisInteirasBro[memory_];
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                Program.Bro_Internal.VariaveisInteirasBro[memory] -= int.Parse(format[7]);
+                            }
                             break;
                     }
                 }
