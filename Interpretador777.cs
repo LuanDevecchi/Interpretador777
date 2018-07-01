@@ -157,9 +157,26 @@ namespace RaffaLang.src
                             Program.Bro_Internal.VariaveisInteirasBro[memory] -= int.Parse(format[7]);
                             break;
                     }
-                }else if(Codes[i].StartsWith("ESPERA AI HATER"))
+                }
+                else if (Codes[i].StartsWith("ESPERA AI HATER"))
                 {
                     Thread.Sleep(TimeSpan.FromSeconds(1));
+                }
+                else if (Codes[i].StartsWith("PEGA OS DADOS ANTES Q EU DOU UM TIRO NA SUA VO"))
+                {
+                    string[] format = Codes[i].Split(' ');
+                    string memory = format[12].Replace("&", String.Empty);
+                    memory = memory.Replace(" ", String.Empty);
+                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                    {
+                        case "FERNVNDXCLOTHING":
+                            int result = int.Parse(Console.ReadLine());
+                            Program.Bro_Internal.VariaveisInteirasBro[memory] = result;
+                            break;
+                        case "LEAN":
+                            Program.Bro_Internal.VariaveisStringsBro[memory] = Console.ReadLine();
+                            break;
+                    }
                 }
 
             }
