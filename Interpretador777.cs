@@ -212,94 +212,223 @@ namespace RaffaLang.src
                         string memory = format[1].Replace("&", String.Empty);
                         string type = format[2];
                         bool retorno = false;
-                        switch (type)
+                        if (format[3].StartsWith("&"))
                         {
-                            case ">":
-                                switch (Program.Bro_Internal.VariaveisTipo[memory])
-                                {
-                                    case "FERNVNDXCLOTHING":
-                                        if (Program.Bro_Internal.VariaveisInteirasBro[memory] > int.Parse(format[3]))
-                                        {
-                                            retorno = true;
-                                        }
-                                        else { retorno = false; ignore = 0x1; }
-                                        break;
-                                }
-                                break;
-                            case "<":
-                                switch (Program.Bro_Internal.VariaveisTipo[memory])
-                                {
-                                    case "FERNVNDXCLOTHING":
-                                        if (Program.Bro_Internal.VariaveisInteirasBro[memory] < int.Parse(format[3]))
-                                        {
-                                            retorno = true;
-                                        }
-                                        else { retorno = false; ignore = 0x1; }
-                                        break;
-                                }
-                                break;
-                            case ">=":
-                                switch (Program.Bro_Internal.VariaveisTipo[memory])
-                                {
-                                    case "FERNVNDXCLOTHING":
-                                        if (Program.Bro_Internal.VariaveisInteirasBro[memory] >= int.Parse(format[3]))
-                                        {
-                                            retorno = true;
-                                        }
-                                        else { retorno = false; ignore = 0x1; }
-                                        break;
-                                }
-                                break;
-                            case "<=":
-                                switch (Program.Bro_Internal.VariaveisTipo[memory])
-                                {
-                                    case "FERNVNDXCLOTHING":
-                                        if (Program.Bro_Internal.VariaveisInteirasBro[memory] <= int.Parse(format[3]))
-                                        {
-                                            retorno = true;
-                                        }
-                                        else { retorno = false; ignore = 0x1; }
-                                        break;
-                                }
-                                break;
-                            case "==":
-                                switch (Program.Bro_Internal.VariaveisTipo[memory])
-                                {
-                                    case "FERNVNDXCLOTHING":
-                                        if (Program.Bro_Internal.VariaveisInteirasBro[memory] == int.Parse(format[3]))
-                                        {
-                                            retorno = true;
-                                        }
-                                        else { retorno = false; ignore = 0x1; }
-                                        break;
-                                }
-                                break;
-                            case "!=":
-                                switch (Program.Bro_Internal.VariaveisTipo[memory])
-                                {
-                                    case "FERNVNDXCLOTHING":
-                                        if (Program.Bro_Internal.VariaveisInteirasBro[memory] != int.Parse(format[3]))
-                                        {
-                                            retorno = true;
-                                        }
-                                        else { retorno = false; ignore = 0x1; }
-                                        break;
-                                }
-                                break;
+                            string memory_ = format[3].Replace("&", String.Empty);
+                            int value = 0;
+                            string valueStr = String.Empty;
+                            switch (Program.Bro_Internal.VariaveisTipo[memory_])
+                            {
+                                case "FERNVNDXCLOTHING":
+                                    value = Program.Bro_Internal.VariaveisInteirasBro[memory_];
+                                    break;
+                                case "LEAN":
+                                    valueStr = Program.Bro_Internal.VariaveisStringsBro[memory_];
+                                    break;
+                            }
+                            switch (type)
+                            {
+                                case ">":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] > value)
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+                                case "<":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] < value)
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+                                case ">=":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] >= value)
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+                                case "<=":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] <= value)
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+                                case "==":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] == value)
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                        case "LEAN":
+                                            string a = valueStr.Replace("\"", String.Empty).Replace("\\", String.Empty).Replace(" ",String.Empty);
+                                            if (Program.Bro_Internal.VariaveisStringsBro[memory].Replace(" ", String.Empty) == a)
+                                            {
+                                                Console.WriteLine("oi");
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+                                case "!=":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] != value)
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                        case "LEAN":
+                                            string a = valueStr.Replace("\"", String.Empty).Replace("\\", String.Empty).Replace(" ", String.Empty);
+                                            if (Program.Bro_Internal.VariaveisStringsBro[memory].Replace(" ", String.Empty) != a)
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+
+                            }
+                        }
+                        else
+                        {
+                            switch (type)
+                            {
+                                case ">":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] > int.Parse(format[3]))
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+                                case "<":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] < int.Parse(format[3]))
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+                                case ">=":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] >= int.Parse(format[3]))
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+                                case "<=":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] <= int.Parse(format[3]))
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+                                case "==":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] == int.Parse(format[3]))
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                        case "LEAN":
+                                            string a = format[3].Replace("\"", String.Empty).Replace("\\", String.Empty).Replace(" ", String.Empty);
+                                            if (Program.Bro_Internal.VariaveisStringsBro[memory].Replace(" ", String.Empty) == a)
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+                                case "!=":
+                                    switch (Program.Bro_Internal.VariaveisTipo[memory])
+                                    {
+                                        case "FERNVNDXCLOTHING":
+                                            
+                                            if (Program.Bro_Internal.VariaveisInteirasBro[memory] != int.Parse(format[3]))
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                        case "LEAN":
+                                            string a = format[3].Replace("\"", String.Empty).Replace("\\", String.Empty).Replace(" ", String.Empty);
+                                            if (Program.Bro_Internal.VariaveisStringsBro[memory].Replace(" ", String.Empty) != a)
+                                            {
+                                                retorno = true;
+                                            }
+                                            else { retorno = false; ignore = 0x1; }
+                                            break;
+                                    }
+                                    break;
+                            }
+                        }
                         }
                     }
-                }
-                else
-                {
-                    if (Codes[i].StartsWith("FIM"))
+                    else
                     {
-                        ignore = 0x0;
+                        if (Codes[i].StartsWith("FIM"))
+                        {
+                            ignore = 0x0;
+                        }
                     }
+
                 }
 
+                Console.ReadLine();
             }
-
-            Console.ReadLine();
         }
     }
-}
