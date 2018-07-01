@@ -159,7 +159,7 @@ namespace RaffaLang.src
                     }
                 }else if(Codes[i].StartsWith("ESPERA AI HATER"))
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
                 }
 
             }
