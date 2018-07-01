@@ -470,6 +470,17 @@ namespace RaffaLang.src
                             ignore = 0x0;
                         }
                     }
+                    if (Codes[i].StartsWith("NUMERO ALEATORIO"))
+                    {
+                        string[] format = Codes[i].Split(' ');
+                        string memory = format[2].Replace("&", String.Empty);
+                        switch (Program.Bro_Internal.VariaveisTipo[memory])
+                        {
+                            case "FERNVNDXCLOTHING":
+                                Program.Bro_Internal.VariaveisInteirasBro[memory] = new Random().Next(0, int.Parse(format[3]));
+                                break;
+                        }
+                    }
                 }
                 else
                 {
