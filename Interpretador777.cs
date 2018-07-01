@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace RaffaLang.src
 {
@@ -156,6 +157,9 @@ namespace RaffaLang.src
                             Program.Bro_Internal.VariaveisInteirasBro[memory] -= int.Parse(format[7]);
                             break;
                     }
+                }else if(Codes[i].StartsWith("ESPERA AI HATER"))
+                {
+                    Thread.Sleep(100);
                 }
 
             }
