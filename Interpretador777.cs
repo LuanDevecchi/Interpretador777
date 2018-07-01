@@ -119,6 +119,20 @@ namespace RaffaLang.src
                 {
                     i = Program.Bro_Internal.MinhaCasaBroID;
                 }
+                else if(Codes[i].StartsWith("SETA"))
+                {
+                    string[] format = Codes[i].Split(' ');
+                    switch (Program.Bro_Internal.VariaveisTipo[format[1]])
+                    {
+                        case "FERNVNDXCLOTHING":
+                            Program.Bro_Internal.VariaveisInteirasBro[format[1]] = int.Parse(format[3]);
+                            break;
+                        case "LEAN":
+                            Program.Bro_Internal.VariaveisStringsBro[format[1]] = format[3];
+                            break;
+                    }
+                    }
+               
             }
 
             Console.ReadLine();
